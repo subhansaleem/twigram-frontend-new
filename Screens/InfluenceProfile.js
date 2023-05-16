@@ -17,12 +17,14 @@ const InfluenceProfile = ({ navigation, route }) => {
   const [activeFocus, setActiveFocus] = useState(false);
   const [positiveFocus, setPositiveFocus] = useState(false);
   const [negativeFocus, setNegativeFocus] = useState(false);
+  const [noActiveCalls, setNoActiveCalls] = useState("");
+  const [noTotalCalls, setNoTotalCalls] = useState("");
   useEffect(() => {
     async function getData() {
       try {
         await axios
           .get(
-            "https://fyp-node-backend-deploy-vercel.vercel.app/influencerprofile/A"
+            `https://fyp-node-backend-deploy-vercel.vercel.app/influencerprofile/${route.params.Name}/A`
           )
           .then((res) => {
             setData1(res.data);
@@ -35,7 +37,7 @@ const InfluenceProfile = ({ navigation, route }) => {
       try {
         await axios
           .get(
-            "https://fyp-node-backend-deploy-vercel.vercel.app/influencerprofile/P"
+            `https://fyp-node-backend-deploy-vercel.vercel.app/influencerprofile/${route.params.Name}/P`
           )
           .then((res) => {
             setData2(res.data);
@@ -48,7 +50,7 @@ const InfluenceProfile = ({ navigation, route }) => {
       try {
         await axios
           .get(
-            "https://fyp-node-backend-deploy-vercel.vercel.app/influencerprofile/N"
+            `https://fyp-node-backend-deploy-vercel.vercel.app/influencerprofile/${route.params.Name}/N`
           )
           .then((res) => {
             setData3(res.data);
@@ -57,10 +59,24 @@ const InfluenceProfile = ({ navigation, route }) => {
         console.log(e);
       }
     }
-
+    const GetNumberOfCalls = async () => {
+      await axios
+        .get(
+          `https://fyp-node-backend-deploy-vercel.vercel.app/getNumberCall/${route.params.Name}`
+        )
+        .then((res) => {
+          setNoTotalCalls(res.data.Total);
+          setNoActiveCalls(res.data.Active);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    };
     getData();
     getData1();
     getData2();
+    GetNumberOfCalls();
+    console.log(noActiveCalls, noTotalCalls);
   }, []);
 
   const [render, setisrender] = useState(false);

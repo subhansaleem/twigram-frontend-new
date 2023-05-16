@@ -13,7 +13,6 @@ import { useEffect, useState } from "react";
 import { useFonts } from "expo-font";
 import axios from "axios";
 import Header from "../Components/Header";
-import CircularProgress from "react-native-circular-progress-indicator";
 import ProgressBar from "../Components/ProgressCircle";
 
 export default function Influencers({ navigation }) {
