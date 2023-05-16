@@ -3,7 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Login from "./Screens/Login";
 import LandingPage from "./Screens/LandingPage";
-import signup from "./Screens/signup";
+import Signup from "./Screens/Signup";
 import Profile from "./Screens/Profile";
 import OTP from "./Screens/OTP";
 import InfluencerProfile from "./Screens/InfluenceProfile";
@@ -30,7 +30,7 @@ export default function App() {
             {/* <Stack.Screen name="OTP" component={OTP} /> */}
             <Stack.Screen name="LandingPage" component={LandingPage} />
             <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="signup" component={signup} />
+            <Stack.Screen name="Signup" component={Signup} />
             <Stack.Screen name="Home" component={Home} />
 
             {/* <Stack.Screen name="CandlestickChart" component={Test} /> */}

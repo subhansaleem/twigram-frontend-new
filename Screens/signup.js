@@ -126,7 +126,8 @@ const Signup = ({ navigation }) => {
             value={firstName}
             onChangeText={setFirstName}
           />
-          {firstNameError ? (<Text style={styles.errorText}>{firstNameError}</Text>
+          {firstNameError ? (
+            <Text style={styles.errorText}>{firstNameError}</Text>
           ) : null}
 
           <TextInput
@@ -142,7 +143,9 @@ const Signup = ({ navigation }) => {
             value={email}
             onChangeText={setEmail}
           />
-          {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
+          {emailError ? (
+            <Text style={styles.errorText}>{emailError}</Text>
+          ) : null}
 
           <TextInput
             style={styles.input}
@@ -212,7 +215,7 @@ const styles = StyleSheet.create({
     width: 300,
     height: 40,
     backgroundColor: "#6D7487",
-    color:"white",
+    color: "white",
     borderRadius: 10,
     marginBottom: 10,
     paddingHorizontal: 10,
@@ -251,4 +254,3 @@ const styles = StyleSheet.create({
 });
 
 export default Signup;
-
