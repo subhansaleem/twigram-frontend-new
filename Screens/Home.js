@@ -52,7 +52,7 @@ const Home = ({ navigation }) => {
         .catch((e) => console.error(e));
     };
     getData();
-    // setInterval(getData, 2000);
+    setInterval(getData, 2000);
   }, []);
   const [influencers, setInfluencers] = useState([]);
 
@@ -78,48 +78,136 @@ const Home = ({ navigation }) => {
     >
       <ScrollView onScroll={handleScroll}>
         <View className="h-14"></View>
-        
+
         <View className="h-80 bg-[#4B5563] mx-5 rounded-lg opacity-100">
-  <View style={{ flexDirection: "row" }}>
-    <Text style={{ color: '#E36139', marginTop: 5, fontSize: 16, marginLeft: 80, marginBottom: 7, fontWeight: 'bold' }}>Name</Text>
-    <Text style={{ color: '#E36139', fontSize: 16, marginTop: 5, marginLeft: 100, marginBottom: 7, fontWeight: 'bold' }}>AC</Text>
-    <Text style={{ color: '#E36139', fontSize: 16, marginTop: 5, marginBottom: 7, marginLeft: 40, fontWeight: 'bold' }}>SC</Text>
-  </View>
+          <View className="flex-1 justify-center items-center mt-4">
+            <View style={{ flexDirection: "row" }}>
+              <Text
+                style={{
+                  width: 40,
+                  color: "#E36139",
+                  fontSize: 12,
+                  fontWeight: "bold",
+                  marginLeft: 10,
+                }}
+              >
+                Rank#
+              </Text>
+              <Text
+                style={{
+                  width: 128,
+                  color: "#E36139",
+                  fontSize: 12,
+                  marginLeft: 10,
+                  fontWeight: "bold",
+                }}
+              >
+                Influencer
+              </Text>
+              <Text
+                style={{
+                  width: 40,
+                  color: "#E36139",
+                  fontSize: 12,
+                  fontWeight: "bold",
+                  textAlign: "center",
+                }}
+              >
+                Active Calls
+              </Text>
+              <Text
+                style={{
+                  width: 50,
+                  color: "#E36139",
+                  fontSize: 12,
+                  fontWeight: "bold",
+                  textAlign: "center",
+                }}
+              >
+                Success Rate
+              </Text>
+            </View>
+          </View>
 
-  <View
-    style={{
-      width: '90%',
-      alignSelf: 'center',
-      borderBottomColor: "#E36139",
-      borderBottomWidth: StyleSheet.hairlineWidth,
-      alignItems: "center",
-    }}
-  ></View>
-  {influencers.map((influencer, index) => (
-    <View
-      key={influencer.name}
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between", // Added to align the influencer data
-        paddingHorizontal: 20,
-        marginVertical: 15,
-      }}
-    >
-      <Text style={{ color: 'white', opacity: 0.8,  fontWeight: '400', fontSize:16 }}>{index + 1}.</Text>
-      <Text style={{ color: 'white', opacity: 0.8, fontWeight: '400', marginRight: 30, fontSize:16  }}>{influencer.name}</Text>
-      <Text style={{ color: 'white', opacity: 0.8, fontWeight: '400', marginRight: 20, fontSize:16  }}>{influencer.activeCalls}</Text>
-      <Text style={{ color: 'white', opacity: 0.8, fontWeight: '400', fontSize:18  }}>{influencer.successRate}</Text>
-    </View>
-  ))}
-</View>
-
+          <View
+            style={{
+              width: "90%",
+              alignSelf: "center",
+              borderBottomColor: "#E36139",
+              borderBottomWidth: StyleSheet.hairlineWidth,
+              alignItems: "center",
+            }}
+          ></View>
+          {influencers.map((influencer, index) => (
+            <View className="flex-1 justify-center items-center">
+              <View
+                key={influencer.name}
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                }}
+              >
+                <View className="w-10 h-10">
+                  <Text
+                    style={{
+                      color: "white",
+                      opacity: 0.8,
+                      fontWeight: index === 0 ? 600 : 400,
+                      fontSize: index === 0 ? 24 : 16,
+                      textAlign: "left",
+                    }}
+                  >
+                    {index + 1}
+                  </Text>
+                </View>
+                <View className="w-32 h-10 ">
+                  <Text
+                    style={{
+                      color: "white",
+                      opacity: 0.8,
+                      fontWeight: index === 0 ? 600 : 400,
+                      fontSize: index === 0 ? 24 : 16,
+                    }}
+                  >
+                    {influencer.name}
+                  </Text>
+                </View>
+                <View className="w-10 h-10 ">
+                  <Text
+                    style={{
+                      color: "white",
+                      opacity: 0.8,
+                      fontWeight: index === 0 ? 600 : 400,
+                      fontSize: index === 0 ? 24 : 16,
+                      textAlign: "center",
+                    }}
+                  >
+                    {influencer.activeCalls}
+                  </Text>
+                </View>
+                <View className="w-10 h-10">
+                  <Text
+                    style={{
+                      color: "white",
+                      opacity: 0.8,
+                      fontWeight: index === 0 ? 600 : 400,
+                      fontSize: index === 0 ? 24 : 16,
+                      textAlign: "center",
+                    }}
+                  >
+                    {influencer.successRate}
+                  </Text>
+                </View>
+              </View>
+            </View>
+          ))}
+        </View>
 
         <View className="flex-row justify-between my-2 p-4">
-          <Text className="text-xl font-bold text-green-600 mx-6">
+          <Text className="text-xl font-bold text-green-600 mx-2">
             Top Gainers
           </Text>
-          <Text className="text-xl text-red-600 font-bold mr-12">
+          <Text className="text-xl text-red-600 font-bold mr-6">
             Top Losers
           </Text>
         </View>
@@ -291,9 +379,17 @@ const Home = ({ navigation }) => {
           </Text>
         </View>
         <ScrollView horizontal nestedScrollEnabled>
-          <BasicCards />
-          <BasicCards />
-          <BasicCards />
+          <BasicCards
+            Title={"CryptoVIPSignals"}
+            SuccessRate={68}
+            TotalCalls={12}
+          />
+          <BasicCards
+            Title={"BitmexCourses"}
+            SuccessRate={78}
+            TotalCalls={98}
+          />
+          <BasicCards Title={"CoinSignals"} SuccessRate={45} TotalCalls={28} />
         </ScrollView>
       </ScrollView>
       <BottomNavigation navigation={navigation} showNav={showNav} />
