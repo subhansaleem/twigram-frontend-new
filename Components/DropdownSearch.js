@@ -10,10 +10,12 @@ import {
   StyleSheet,
 } from "react-native";
 import React, { useRef, useState } from "react";
-const DropDownSearch = (cd, setSelectedCountry) => {
+const DropDownSearch = (cd) => {
   const [data, setData] = useState(cd["Data"]);
   const [search, setSearch] = useState("");
   const [clicked, setClicked] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState("");
+
   const searchRef = useRef();
   const onSearch = (search) => {
     if (search !== "") {
