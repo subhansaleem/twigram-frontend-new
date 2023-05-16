@@ -15,11 +15,11 @@ import { Picker } from "@react-native-picker/picker";
 import { RadioButton } from "react-native-paper";
 import Header from "../Components/Header";
 import { useEffect } from "react";
-import DropDownSearch from "../Components/DropdownSearch";
 import Leverage from "../Components/Leverage";
 import { ProfileContext } from "../Components/profilecontext";
 
 export default function Addcall({ navigation }) {
+
   const DEVICE_WIDTH = Dimensions.get("window").width;
   const iwidth = DEVICE_WIDTH - 40;
   const [longshort, setlongshort] = useState("");
@@ -41,25 +41,19 @@ export default function Addcall({ navigation }) {
   const [selectedconversion, setSelectedconversion] = useState("USDT");
   const {name, setName}=useContext(ProfileContext);
   const [errors, setErrors]=useState("");
-    const handleSearch = (text) => {
-    setQuery(text);
-    const filtered = data.filter((item) =>
-      item.label.toLowerCase().startsWith(text.toLowerCase())
-    );
-    setFilteredData(filtered);
-  };
+  
 
   const handleSaveData = () => {
-    if (longshort == "") {
+    if (longshort === "") {
       newErrors.push("Call Duration is required.");
       setcalldurationfield("Required");
     }
-
-    if (buysell == "") {
+  
+    if (buysell === "") {
       newErrors.push("Call Type is required.");
       setcalltypefield("Required");
     }
-
+  
     if (t1 === "") {
       newErrors.push("Target 1 is required.");
       settarget1field("Required");
@@ -68,17 +62,17 @@ export default function Addcall({ navigation }) {
       newErrors.push("Target 2 cannot be smaller than Target 1");
       settarget2field("Incorrect Value");
     }
-
+  
     if (t3 !== "" && parseFloat(t3) < parseFloat(t2)) {
       newErrors.push("Target 3 cannot be smaller than Target 2");
       settarget3field("Incorrect Value");
     }
-
+  
     if (t3 !== "" && parseFloat(t3) < parseFloat(t1)) {
       newErrors.push("Target 3 cannot be smaller than Target 1");
       settarget3field("Incorrect Value");
     }
-    if (leverage == "") {
+    if (leverage === "") {
       newErrors.push("Leverage is required");
       setleveragefield("Required");
     }
@@ -86,17 +80,46 @@ export default function Addcall({ navigation }) {
       newErrors.push("Stoploss is required.");
       setstoplossfield("Required");
     }
-
-    const data = `username:${name},Coinname:${coinDetails},CallDuration: ${longshort}, CallType: ${buysell}, Target 1: ${t1}. Target 2: ${t2}, Target 3: ${t3}, Leverage:${leverage} Stoploss: ${stoploss}`;
-
+  
     setErrors(newErrors);
-
+  
     if (newErrors.length === 0) {
       setIsModalVisible(true);
+      let Targets = [];
+      Targets.push(t1);
+      Targets.push(t2);
+      Targets.push(t3);
+  
+      const data = {
+        Name: name,
+        call: {
+          Coin: selectedCoin,
+          Conversion: selectedconversion,
+          Type: buysell,
+          Duration: longshort,
+          Targets: Targets,
+          Stoploss: stoploss,
+          Leverage: leverage,
+        },
+      };
+  
+      console.log(data);
+  
+      axios
+        .post(
+          "https://fyp-node-backend-deploy-vercel.vercel.app/addcall",
+          data
+        )
+        .then((response) => {
+          // Handle the API response
+          console.log(response.data);
+        })
+        .catch((error) => {
+          // Handle any errors
+          console.error(error);
+        });
     }
-    console.log(data);
   };
-
   const [Targetobject, setTargetobject] = useState("");
   const [Targetobject1, setTargetobject1] = useState("");
   const [coinDetails, setCoinDetails] = useState([]);
@@ -114,26 +137,18 @@ export default function Addcall({ navigation }) {
       setleverage([...leverages, value]);
     }
   };
-  var cd;
+  const [selectedCoin, setSelectedCoin] = useState(null);
+  const [cd, setCd] = useState([]);
   useEffect(() => {
-    const getData = async () => {
-      axios
-        .get("https://api.binance.com/api/v3/ticker/24hr")
-        .then((res) => {
-          setCoinDetails(res.data);
-        })
-        .catch((e) => console.error(e));
-    };
-    getData();
+    // Fetch coin details from the API
+    axios.get('https://api.binance.com/api/v3/ticker/24hr')
+      .then(response => {
+        setCd(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }, []);
-  cd = coinDetails.filter((_, v, arr) => {
-    if (
-      String(arr[v]["symbol"]).slice(-4) === "BUSD" ||
-      String(arr[v]["symbol"]).slice(-4) === "USDT"
-    ) {
-      return arr[v];
-    }
-  });
   return (
     <ImageBackground
       source={require("../assets/images/Background.jpg")}
@@ -143,7 +158,40 @@ export default function Addcall({ navigation }) {
       <View style={{ marginTop: 10 }}></View>
       <Header Title={"Make A Call"} navigation={navigation} />
 
-      <DropDownSearch Data={cd} />
+      <View>
+  <Text
+    style={{
+      fontSize: 17,
+      marginLeft: 28,
+      color: "white",
+      marginTop: 10,
+      marginBottom: 2,
+    }}
+  >
+    Coin Name
+  </Text>
+  <View style={{ width: iwidth, alignSelf: "center" }}>
+    <Picker
+      style={{
+        marginTop: 10,
+        backgroundColor: "grey",
+        borderColor: "white",
+        borderWidth: 0.5,
+        borderRadius: 8,
+        padding: 10,
+        color: "white"
+      }}
+      selectedValue={selectedCoin}
+      onValueChange={(itemValue) => setSelectedCoin(itemValue)}
+      mode="dropdown" // Use dropdown mode to show the picker box
+    >
+      {cd.map((item, index) => (
+        <Picker.Item key={index} label={item.symbol} value={item.symbol} />
+      ))}
+    </Picker>
+  </View>
+</View>
+
       <View
         style={{
           marginTop: 25,
