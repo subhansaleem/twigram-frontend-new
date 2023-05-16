@@ -90,9 +90,11 @@ const InfluenceProfile = ({ navigation, route }) => {
       );
     } else {
       return (
-        <Text style={{ fontSize: 14, fontWeight: "bold", color: "white" }}>
-          {text}
-        </Text>
+        <>
+          <Text style={{ fontSize: 14, fontWeight: "bold", color: "white" }}>
+            {text}
+          </Text>
+        </>
       );
     }
   };

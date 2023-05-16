@@ -8,20 +8,20 @@ const Cards = (props) => {
   function formatTimestamp(timestamp) {
     const currentTime = new Date().getTime() / 1000; // Get current time in seconds
     const diff = currentTime - timestamp; // Calculate the difference in seconds
-  
+
     const days = Math.floor(diff / (24 * 60 * 60)); // Convert seconds to days
     const hours = Math.floor((diff % (24 * 60 * 60)) / (60 * 60)); // Convert remaining seconds to hours
     const minutes = Math.floor((diff % (60 * 60)) / 60); // Convert remaining seconds to minutes
-  
+
     return `${days}d ${hours}h ${minutes}m ago`;
   }
-  
+
   const renderitem = ({ item, index }) =>
     props.Name == item.Name ? (
       <LinearGradient
         colors={["#2D3034", "#3E4042"]}
         className="rounded-md self-center my-1 mx-1 h-60"
-        style={{width: '90%'}}
+        style={{ width: "90%" }}
       >
         <View className="flex-row justify-around">
           <View className="flex-1 justify-center items-start ml-8">
@@ -49,9 +49,9 @@ const Cards = (props) => {
               </Text>
             </View>
             <View>
-            <Text className="text-white font-semibold mt-1">
-    {formatTimestamp(item.Timestamp)}
-  </Text>
+              <Text className="text-white font-semibold mt-1">
+                {formatTimestamp(item.Timestamp)}
+              </Text>
             </View>
           </View>
           <View className="flex-1 justify-center item">
@@ -64,125 +64,122 @@ const Cards = (props) => {
                 </>
               </View>
               <View>
-                <Text className="self-center mt-2 font-semibold">$
-                  {item.Call.buyvalue}
+                <Text className="self-center mt-2 font-semibold">
+                  ${item.Call.buyvalue}
                 </Text>
               </View>
             </View>
           </View>
         </View>
         <View className="flex-1 mx-8">
-  <View
-    style={{
-      borderBottomColor: "black",
-      borderBottomWidth: StyleSheet.hairlineWidth,
-      alignSelf: "stretch",
-      width: "100%",
-      marginTop: 20, // Reduce the marginVertical value to decrease the vertical gap
-    }}
-  />
-</View>
-<View
-  style={{
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-  }}
->
-<View
-  style={{
-    backgroundColor: "white",
-    flexDirection: "row",
-    borderRadius: "rounded-md",
-    //padding: "p-2",
-    alignSelf: "flex-start",
-    marginTop:-18,
-    padding:5,
-    borderRadius:5,
-
-  }}
->
-    <Image
-      source={require("../assets/images/aim.png")}
-      className="mt-1 w-3 h-3 mr-1"
-      //resizeMode="cover"
-    />
-    <Text style={{fontSize:'500', fontSize:13}}>Targets </Text>
-    <Text style={{fontSize:'500', fontSize:13}}>{item.Call.Targets.join(" - ")}</Text>
-  </View>
-  <View
-  style={{
-    backgroundColor: "white",
-    flexDirection: "row",
-    borderRadius: "rounded-md",
-    //padding: "p-2",
-    alignSelf: "flex-start",
-    marginTop:-18,
-    padding:5,
-    borderRadius:5,
-
-  }}
->
-    <Image
-      source={require("../assets/images/forbidden.png")}
-      className="mt-1 w-3 h-3"
-      //resizeMode="cover"
-    />
-    <Text style={{fontSize:'500', fontSize:13, marginLeft:3}}>Stop Loss</Text>
-    <Text style={{fontSize:'500', fontSize:13, marginLeft:2}}>{item.Call.Stoploss}</Text>
-  </View>
-</View>
-
-
           <View
             style={{
-              flex: 1,
+              borderBottomColor: "black",
+              borderBottomWidth: StyleSheet.hairlineWidth,
+              alignSelf: "stretch",
+              width: "100%",
+              marginTop: 20, // Reduce the marginVertical value to decrease the vertical gap
+            }}
+          />
+        </View>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+          <View
+            style={{
+              backgroundColor: "white",
               flexDirection: "row",
-              justifyContent: "space-between",
+              borderRadius: "rounded-md",
+              //padding: "p-2",
+              alignSelf: "flex-start",
+              marginTop: -18,
+              padding: 5,
+              borderRadius: 5,
             }}
           >
-            {item.Call.CompletedOn != null ||
-            item.Call.CompletedOn != undefined ? (
-              <View
-  style={{
-    backgroundColor: "white",
-    flexDirection: "row",
-    borderRadius: "rounded-md",
-    //padding: "p-2",
-    alignSelf: "flex-start",
-    marginTop:-5,
-    padding:5,
-    borderRadius:5,
-
-  }}
->
-                 <Image
-              source={require("../assets/images/medal.png")}
+            <Image
+              source={require("../assets/images/aim.png")}
+              className="mt-1 w-3 h-3 mr-1"
+              //resizeMode="cover"
+            />
+            <Text style={{ fontSize: "500", fontSize: 13 }}>Targets </Text>
+            <Text style={{ fontSize: "500", fontSize: 13 }}>
+              {item.Call.Targets.join(" - ")}
+            </Text>
+          </View>
+          <View
+            style={{
+              backgroundColor: "white",
+              flexDirection: "row",
+              borderRadius: "rounded-md",
+              //padding: "p-2",
+              alignSelf: "flex-start",
+              marginTop: -18,
+              padding: 5,
+              borderRadius: 5,
+            }}
+          >
+            <Image
+              source={require("../assets/images/forbidden.png")}
               className="mt-1 w-3 h-3"
               //resizeMode="cover"
-            ></Image>
-                <Text style={{fontSize:'500', fontSize:13}}>
-                  call achieved
-                </Text>
-                <Text style={{fontSize:'500', fontSize:13, marginLeft:2}}>{item.Call.CompletedOn}</Text>
-              </View>
-            ) : (
-              ""
-            )}
-            {item.Call.Accuracy != null || item.Call.Accuracy != undefined ? (
-              <View className="bg-white mt-2 flex-row rounded-md p-2 self-start">
-                <Text className="text-black font-semibold mx-1">Accuracy</Text>
-                <Text className="text-black ">{item.Call.Accuracy}</Text>
-              </View>
-            ) : (
-              ""
-            )}
+            />
+            <Text style={{ fontSize: "500", fontSize: 13, marginLeft: 3 }}>
+              Stop Loss
+            </Text>
+            <Text style={{ fontSize: "500", fontSize: 13, marginLeft: 2 }}>
+              {item.Call.Stoploss}
+            </Text>
           </View>
-        
+        </View>
+
+        <View
+          style={{
+            flex: 1,
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+          {item.Call.CompletedOn != null ||
+          item.Call.CompletedOn != undefined ? (
+            <View
+              style={{
+                backgroundColor: "white",
+                flexDirection: "row",
+                borderRadius: "rounded-md",
+                //padding: "p-2",
+                alignSelf: "flex-start",
+                marginTop: -5,
+                padding: 5,
+                borderRadius: 5,
+              }}
+            >
+              <Image
+                source={require("../assets/images/medal.png")}
+                className="mt-1 w-3 h-3"
+                //resizeMode="cover"
+              ></Image>
+              <Text style={{ fontSize: "500", fontSize: 13 }}>
+                call achieved
+              </Text>
+              <Text style={{ fontSize: "500", fontSize: 13, marginLeft: 2 }}>
+                {item.Call.CompletedOn}
+              </Text>
+            </View>
+          ) : null}
+          {item.Call.Accuracy != null || item.Call.Accuracy != undefined ? (
+            <View className="bg-white mt-2 flex-row rounded-md p-2 self-start">
+              <Text className="text-black font-semibold mx-1">Accuracy</Text>
+              <Text className="text-black ">{item.Call.Accuracy}</Text>
+            </View>
+          ) : null}
+        </View>
       </LinearGradient>
-    ) : (
-      ""
-    );
+    ) : null;
 
   return <FlatList data={props.data} renderItem={renderitem} />;
 };
