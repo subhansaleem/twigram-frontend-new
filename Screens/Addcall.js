@@ -11,7 +11,7 @@ import {
   Dimensions,
 } from "react-native";
 import axios from "axios";
-// import { Picker } from "@react-native-picker/picker";
+import { Picker } from "@react-native-picker/picker";
 import { RadioButton } from "react-native-paper";
 import Header from "../Components/Header";
 import { useEffect } from "react";
@@ -28,6 +28,7 @@ export default function Addcall({ navigation }) {
   const [t3, sett3] = useState("");
   const [stoploss, setstoploss] = useState("");
   const newErrors = [];
+  const [errors, setErrors] = useState("");
   const [target1field, settarget1field] = useState("");
   const [target2field, settarget2field] = useState("");
   const [target3field, settarget3field] = useState("");
@@ -38,7 +39,6 @@ export default function Addcall({ navigation }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [leverage, setleverage] = useState([]);
   const [selectedconversion, setSelectedconversion] = useState("USDT");
-  const [selectedCountry, setSelectedCountry] = useState("");
 
   const handleSearch = (text) => {
     setQuery(text);
@@ -142,7 +142,7 @@ export default function Addcall({ navigation }) {
       <View style={{ marginTop: 10 }}></View>
       <Header Title={"Make A Call"} navigation={navigation} />
 
-      <DropDownSearch Data={cd} setSelectedCountry={setSelectedCountry} />
+      <DropDownSearch Data={cd} />
       <View
         style={{
           marginTop: 25,

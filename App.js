@@ -3,7 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Login from "./Screens/Login";
 import LandingPage from "./Screens/LandingPage";
-import Signup from "./Screens/Signup";
+import Signup from "./Screens/signup";
 import Profile from "./Screens/Profile";
 import OTP from "./Screens/OTP";
 import InfluencerProfile from "./Screens/InfluenceProfile";
