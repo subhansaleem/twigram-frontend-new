@@ -10,6 +10,7 @@ import React from "react";
 import ButtonCmp from "../Components/ButtonCmp";
 import BasicCards from "../Components/BasicCards";
 import BottomNavigation from "../Components/BottomNavigation";
+import Data from "../Constants/data";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { BlurView } from "expo-blur";
@@ -53,7 +54,22 @@ const Home = ({ navigation }) => {
     getData();
     // setInterval(getData, 2000);
   }, []);
+  const [influencers, setInfluencers] = useState([]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "https://fyp-node-backend-deploy-vercel.vercel.app/influencer?sortby=successRate"
+        );
+        setInfluencers(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
     <ImageBackground
       source={require("../assets/images/Background.jpg")}
@@ -62,7 +78,43 @@ const Home = ({ navigation }) => {
     >
       <ScrollView onScroll={handleScroll}>
         <View className="h-14"></View>
-        <View className="h-80 bg-[#4B5563] mx-5 rounded-lg opacity-100 "></View>
+        
+        <View className="h-80 bg-[#4B5563] mx-5 rounded-lg opacity-100">
+  <View style={{ flexDirection: "row" }}>
+    <Text style={{ color: '#E36139', marginTop: 5, fontSize: 16, marginLeft: 80, marginBottom: 7, fontWeight: 'bold' }}>Name</Text>
+    <Text style={{ color: '#E36139', fontSize: 16, marginTop: 5, marginLeft: 100, marginBottom: 7, fontWeight: 'bold' }}>AC</Text>
+    <Text style={{ color: '#E36139', fontSize: 16, marginTop: 5, marginBottom: 7, marginLeft: 40, fontWeight: 'bold' }}>SC</Text>
+  </View>
+
+  <View
+    style={{
+      width: '90%',
+      alignSelf: 'center',
+      borderBottomColor: "#E36139",
+      borderBottomWidth: StyleSheet.hairlineWidth,
+      alignItems: "center",
+    }}
+  ></View>
+  {influencers.map((influencer, index) => (
+    <View
+      key={influencer.name}
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between", // Added to align the influencer data
+        paddingHorizontal: 20,
+        marginVertical: 15,
+      }}
+    >
+      <Text style={{ color: 'white', opacity: 0.8,  fontWeight: '400', fontSize:16 }}>{index + 1}.</Text>
+      <Text style={{ color: 'white', opacity: 0.8, fontWeight: '400', marginRight: 30, fontSize:16  }}>{influencer.name}</Text>
+      <Text style={{ color: 'white', opacity: 0.8, fontWeight: '400', marginRight: 20, fontSize:16  }}>{influencer.activeCalls}</Text>
+      <Text style={{ color: 'white', opacity: 0.8, fontWeight: '400', fontSize:18  }}>{influencer.successRate}</Text>
+    </View>
+  ))}
+</View>
+
+
         <View className="flex-row justify-between my-2 p-4">
           <Text className="text-xl font-bold text-green-600 mx-6">
             Top Gainers
