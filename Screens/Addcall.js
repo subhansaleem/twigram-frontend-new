@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   StyleSheet,
   Text,
@@ -17,6 +17,7 @@ import Header from "../Components/Header";
 import { useEffect } from "react";
 import DropDownSearch from "../Components/DropdownSearch";
 import Leverage from "../Components/Leverage";
+import { ProfileContext } from "../Components/profilecontext";
 
 export default function Addcall({ navigation }) {
   const DEVICE_WIDTH = Dimensions.get("window").width;
@@ -28,7 +29,6 @@ export default function Addcall({ navigation }) {
   const [t3, sett3] = useState("");
   const [stoploss, setstoploss] = useState("");
   const newErrors = [];
-  const [errors, setErrors] = useState("");
   const [target1field, settarget1field] = useState("");
   const [target2field, settarget2field] = useState("");
   const [target3field, settarget3field] = useState("");
@@ -39,8 +39,9 @@ export default function Addcall({ navigation }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [leverage, setleverage] = useState([]);
   const [selectedconversion, setSelectedconversion] = useState("USDT");
-
-  const handleSearch = (text) => {
+  const {name, setName}=useContext(ProfileContext);
+  const [errors, setErrors]=useState("");
+    const handleSearch = (text) => {
     setQuery(text);
     const filtered = data.filter((item) =>
       item.label.toLowerCase().startsWith(text.toLowerCase())
@@ -86,7 +87,7 @@ export default function Addcall({ navigation }) {
       setstoplossfield("Required");
     }
 
-    const data = ` CallDuration: ${longshort}, CallType: ${buysell}, Target 1: ${t1}. Target 2: ${t2}, Target 3: ${t3}, Leverage:${leverage} Stoploss: ${stoploss}`;
+    const data = `username:${name},Coinname:${coinDetails},CallDuration: ${longshort}, CallType: ${buysell}, Target 1: ${t1}. Target 2: ${t2}, Target 3: ${t3}, Leverage:${leverage} Stoploss: ${stoploss}`;
 
     setErrors(newErrors);
 
