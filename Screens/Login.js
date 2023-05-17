@@ -22,6 +22,8 @@ const Login = ({ navigation }) => {
     setPassword,
     contact,
     setContact,
+    accessToken,
+    setaccessToken,
   } = useContext(ProfileContext);
   const [loginStatus, setLoginStatus] = useState(false);
   const [loginError, setLoginError] = useState("");
@@ -43,7 +45,11 @@ const Login = ({ navigation }) => {
           password: Password,
         }
       );
-
+      setContact(response.data.phone);
+      setaccessToken(response.data.accessToken);
+      setEmail(response.data.email);
+      console.log(response.data);
+      //console.log(email);
       if (response.status === 200) {
         navigation.navigate("Home");
       } else {

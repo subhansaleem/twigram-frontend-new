@@ -7,11 +7,13 @@ export const ProfileProvider = ({ children }) => {
   const [email, setEmail] = useState("");
   const [Password, setPassword]=useState("")
   const [contact, setContact] = useState("");
+  const [accessToken, setaccessToken]=useState("");
   return (
     <ProfileContext.Provider
-      value={{ name, setName, email, setEmail,Password, setPassword, contact, setContact }}
+      value={{ name, setName, email, setEmail,Password, setPassword, accessToken, setaccessToken, contact, setContact }}
     >
       {children}
     </ProfileContext.Provider>
   );
 };
+

@@ -11,6 +11,7 @@ import {
   Dimensions,
   Platform,
 } from "react-native";
+import axios from "axios";
 import { ProfileContext } from "../Components/profilecontext";
 import { useHeaderHeight } from "@react-navigation/elements";
 
@@ -27,15 +28,29 @@ export default function EditProfile({ navigation, route }) {
   } = useContext(ProfileContext);
   const screenWidth = Dimensions.get("window").width;
   const screenheight = Dimensions.get("window").height;
-  const [error, seterror] = useState([]);
+  // const [error, seterror] = useState([]);
   const iwidth = screenWidth - 50;
-  const handleSave = () => {
-    // your code to save the updated name, email, and contact values
+
+  const handleSave = async () => {
     setName(name);
     setEmail(email);
     setPassword(Password);
     setContact(contact);
-    navigation.goBack();
+    //navigation.goBack();
+    console.log(name,email,Password,contact)
+      const response = await axios.post(
+        "https://fyp-node-backend-deploy-vercel.vercel.app/updateProfile",
+        {
+          "username": name,
+          "password": Password,
+          "phone": contact
+        }
+      );
+      console.log(response.status)
+    if (response.status === 200) {
+      navigation.navigate("Profile");
+    }
+  
   };
   const handlenav = () => {
     navigation.navigate("Home");

@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { useFonts } from "expo-font";
 import axios from "axios";
-
+import { ProfileContext } from "../Components/profilecontext";
 const Signup = ({ navigation }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
