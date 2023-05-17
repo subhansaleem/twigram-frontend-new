@@ -18,13 +18,16 @@ import { BlurView } from "expo-blur";
 const Home = ({ navigation }) => {
   const [scrollPercentage, setScrollPercentage] = useState(0);
   const [showNav, setShowNav] = useState(true);
-
+  const [influencers, setInfluencers] = useState([]);
+  const [coinDetails, setCoinDetails] = useState([]);
   const handleScroll = (event) => {
     const { contentOffset, contentSize, layoutMeasurement } = event.nativeEvent;
+
     const scrollPosition = contentOffset.y;
     const contentHeight = contentSize.height;
     const scrollViewHeight = layoutMeasurement.height;
     const maxScroll = contentHeight - scrollViewHeight;
+
     const percentage = (scrollPosition / maxScroll) * 100;
     setScrollPercentage(percentage.toFixed(2)); // round to 2 decimal places
     if (scrollPercentage < 25) {
@@ -34,7 +37,6 @@ const Home = ({ navigation }) => {
     }
   };
 
-  const [coinDetails, setCoinDetails] = useState([]);
   let cd = [];
   useEffect(() => {
     const getData = async () => {
@@ -52,22 +54,28 @@ const Home = ({ navigation }) => {
         .catch((e) => console.error(e));
     };
     getData();
-    setInterval(getData, 2000);
+    // setInterval(getData, 2000);
   }, []);
-  const [influencers, setInfluencers] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://fyp-node-backend-deploy-vercel.vercel.app/influencer?sortby=successRate"
+          "https://fyp-node-backend-deploy-vercel.vercel.app/getInfluencer?sortby=successRate&limit=5"
         );
         setInfluencers(response.data);
       } catch (error) {
         console.log(error);
       }
     };
-
+    const updateInfluencers = async () => {
+      try {
+        await axios.get("http://localhost:8080/updateInfluencer");
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    updateInfluencers();
     fetchData();
   }, []);
   return (
@@ -79,7 +87,7 @@ const Home = ({ navigation }) => {
       <ScrollView onScroll={handleScroll}>
         <View className="h-14"></View>
 
-        <View className="h-80 bg-[#4B5563] mx-5 rounded-lg opacity-100">
+        <BlurView intensity={80} className="h-80 mx-5 rounded-lg ">
           <View className="flex-1 justify-center items-center mt-4">
             <View style={{ flexDirection: "row" }}>
               <Text
@@ -139,9 +147,11 @@ const Home = ({ navigation }) => {
             }}
           ></View>
           {influencers.map((influencer, index) => (
-            <View className="flex-1 justify-center items-center">
+            <View
+              className="flex-1 justify-center items-center"
+              key={influencer.name}
+            >
               <View
-                key={influencer.name}
                 style={{
                   display: "flex",
                   flexDirection: "row",
@@ -195,13 +205,13 @@ const Home = ({ navigation }) => {
                       textAlign: "center",
                     }}
                   >
-                    {influencer.successRate}
+                    {parseFloat(influencer.scoreAverage).toPrecision(2)}
                   </Text>
                 </View>
               </View>
             </View>
           ))}
-        </View>
+        </BlurView>
 
         <View className="flex-row justify-between my-2 p-4">
           <Text className="text-xl font-bold text-green-600 mx-2">

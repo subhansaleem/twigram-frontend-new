@@ -11,14 +11,17 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 const InfluenceProfile = ({ navigation, route }) => {
+  console.log(route.params.Name);
   const [data1, setData1] = useState([]);
   const [data2, setData2] = useState([]);
   const [data3, setData3] = useState([]);
   const [activeFocus, setActiveFocus] = useState(false);
   const [positiveFocus, setPositiveFocus] = useState(false);
   const [negativeFocus, setNegativeFocus] = useState(false);
-  const [noActiveCalls, setNoActiveCalls] = useState("");
-  const [noTotalCalls, setNoTotalCalls] = useState("");
+
+  const [noActiveCalls, setNoActiveCalls] = useState(0);
+  const [noTotalCalls, setNoTotalCalls] = useState(0);
+
   useEffect(() => {
     async function getData() {
       try {
@@ -61,12 +64,11 @@ const InfluenceProfile = ({ navigation, route }) => {
     }
     const GetNumberOfCalls = async () => {
       await axios
-        .get(
-          `https://fyp-node-backend-deploy-vercel.vercel.app/getNumberCall/${route.params.Name}`
-        )
+
+        .get(`http://localhost:8080/influencerMetaData/${route.params.Name}`)
         .then((res) => {
-          setNoTotalCalls(res.data.Total);
-          setNoActiveCalls(res.data.Active);
+          setNoTotalCalls(res.data["totalCalls"]);
+          setNoActiveCalls(res.data["activeCalls"]);
         })
         .catch((e) => {
           console.log(e);
@@ -76,11 +78,9 @@ const InfluenceProfile = ({ navigation, route }) => {
     getData1();
     getData2();
     GetNumberOfCalls();
-    console.log(noActiveCalls, noTotalCalls);
   }, []);
 
   const [render, setisrender] = useState(false);
-  // an object is declared which calls a different object from data file as per button clicked
   const [object, setobject] = useState([]);
   const activepressed = () => {
     setisrender(true);
@@ -128,7 +128,6 @@ const InfluenceProfile = ({ navigation, route }) => {
           <Image
             source={require("../assets/images/left-arrow.png")}
             className="mt-8 mx-5 w-6 h-5"
-            //resizeMode="cover"
           ></Image>
         </TouchableOpacity>
         <Text className="text-white text-2xl ml-4 mt-4 font-bold">
@@ -142,7 +141,7 @@ const InfluenceProfile = ({ navigation, route }) => {
             <Text>Total Calls</Text>
           </View>
           <Text className="text-white font-semibold text-lg">
-            {route.params.TotalCalls}
+            {noTotalCalls}
           </Text>
         </View>
         <Image
@@ -155,7 +154,7 @@ const InfluenceProfile = ({ navigation, route }) => {
             <Text>Active Calls</Text>
           </View>
           <Text className="text-white font-semibold text-lg">
-            {route.params.ActiveCalls}
+            {noActiveCalls}
           </Text>
         </View>
       </View>
@@ -205,6 +204,7 @@ const InfluenceProfile = ({ navigation, route }) => {
         </TouchableOpacity>
       </View>
       <View style={{ paddingVertical: 5 }}></View>
+      {console.log(object, data1)}
       {render ? (
         <Cards data={object} Name={route.params.Name} />
       ) : (

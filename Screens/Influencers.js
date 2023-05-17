@@ -7,7 +7,6 @@ import {
   ImageBackground,
 } from "react-native";
 
-import { Dimensions } from "react-native";
 import React from "react";
 import { useEffect, useState } from "react";
 import { useFonts } from "expo-font";
@@ -22,7 +21,9 @@ export default function Influencers({ navigation }) {
     async function getData() {
       try {
         await axios
-          .get("https://fyp-node-backend-deploy-vercel.vercel.app/influencers")
+          .get(
+            "https://fyp-node-backend-deploy-vercel.vercel.app/getInfluencer?sortby=successRate"
+          )
           .then((res) => {
             const api_data = res.data;
             setData1(api_data);
@@ -66,8 +67,14 @@ export default function Influencers({ navigation }) {
             >
               <View style={styles.card}>
                 <View style={styles.headingContainer}>
-                  <Text style={styles.text1}>{item.name}</Text>
-                  <ProgressBar fill={item.successRate} />
+                  <Text
+                    style={styles.text1}
+                    numberOfLines={1}
+                    ellipsizeMode="head"
+                  >
+                    {item.name}
+                  </Text>
+                  <ProgressBar fill={item.scoreAverage} />
                 </View>
                 <View className="flex-row justify-between mx-10">
                   <Text style={styles.text2}>Total Calls</Text>

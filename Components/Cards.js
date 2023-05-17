@@ -1,8 +1,6 @@
 import { View, Text, StyleSheet, FlatList, Image } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
-// import { data } from "./data.js";
-// import { data1 } from "./data.js";
 
 const Cards = (props) => {
   function formatTimestamp(timestamp) {
@@ -86,7 +84,6 @@ const Cards = (props) => {
           style={{
             flex: 1,
             flexDirection: "row",
-            justifyContent: "space-between",
           }}
         >
           <View
@@ -94,9 +91,8 @@ const Cards = (props) => {
               backgroundColor: "white",
               flexDirection: "row",
               borderRadius: "rounded-md",
-              //padding: "p-2",
-              alignSelf: "flex-start",
               marginTop: -18,
+              maxWidth: 180,
               padding: 5,
               borderRadius: 5,
             }}
@@ -106,9 +102,9 @@ const Cards = (props) => {
               className="mt-1 w-3 h-3 mr-1"
               //resizeMode="cover"
             />
-            <Text style={{ fontSize: "500", fontSize: 13 }}>Targets </Text>
-            <Text style={{ fontSize: "500", fontSize: 13 }}>
-              {item.Call.Targets.join(" - ")}
+            <Text style={{ fontSize: 13 }}>Targets : </Text>
+            <Text style={{ fontSize: 13, textAlign: "left" }}>
+              {item.Call.Targets.map((x) => parseFloat(x).toPrecision(2))}
             </Text>
           </View>
           <View
@@ -116,7 +112,6 @@ const Cards = (props) => {
               backgroundColor: "white",
               flexDirection: "row",
               borderRadius: "rounded-md",
-              //padding: "p-2",
               alignSelf: "flex-start",
               marginTop: -18,
               padding: 5,
