@@ -65,7 +65,13 @@ export default function Influencers({ navigation }) {
             >
               <View style={styles.card}>
                 <View style={styles.headingContainer}>
-                  <Text style={styles.text1}>{item.name}</Text>
+                  <Text
+                    style={styles.text1}
+                    numberOfLines={1}
+                    ellipsizeMode="head"
+                  >
+                    {item.name}
+                  </Text>
                   <ProgressBar fill={item.successRate} />
                 </View>
                 <View className="flex-row justify-between mx-10">
