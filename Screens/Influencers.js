@@ -74,7 +74,7 @@ export default function Influencers({ navigation }) {
                   >
                     {item.name}
                   </Text>
-                  <ProgressBar fill={item.successRate} />
+                  <ProgressBar fill={item.scoreAverage} />
                 </View>
                 <View className="flex-row justify-between mx-10">
                   <Text style={styles.text2}>Total Calls</Text>
