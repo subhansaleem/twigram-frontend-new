@@ -39,16 +39,17 @@ export default function Addcall({ navigation }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [leverage, setleverage] = useState([]);
   const [selectedconversion, setSelectedconversion] = useState("USDT");
-  const {name, setName}=useContext(ProfileContext);
-  const [errors, setErrors]=useState("");
-  
 
-  const handleSaveData = () => {
+  const { name, setName } = useContext(ProfileContext);
+  const [errors, setErrors] = useState("");
+
+  const handleSaveData = async () => {
+
     if (longshort === "") {
       newErrors.push("Call Duration is required.");
       setcalldurationfield("Required");
     }
-  
+
     if (buysell === "") {
       newErrors.push("Call Type is required.");
       setcalltypefield("Required");
@@ -80,7 +81,7 @@ export default function Addcall({ navigation }) {
       newErrors.push("Stoploss is required.");
       setstoplossfield("Required");
     }
-  
+
     setErrors(newErrors);
   
     if (newErrors.length === 0) {
@@ -89,9 +90,11 @@ export default function Addcall({ navigation }) {
       Targets.push(t1);
       Targets.push(t2);
       Targets.push(t3);
-  
+
+      const Timestamp = new Date().getTime();
       const data = {
         Name: name,
+        Timestamp: Timestamp,
         call: {
           Coin: selectedCoin,
           Conversion: selectedconversion,
@@ -102,14 +105,22 @@ export default function Addcall({ navigation }) {
           Leverage: leverage,
         },
       };
-  
-      console.log(data);
-  
-      axios
-        .post(
-          "https://fyp-node-backend-deploy-vercel.vercel.app/addcall",
-          data
-        )
+
+      await axios
+        .post("https://fyp-node-backend-deploy-vercel.vercel.app/addcall", {
+          Name: name,
+          Timestamp: Timestamp,
+          call: {
+            Coin: selectedCoin,
+            Conversion: selectedconversion,
+            Type: buysell,
+            Duration: longshort,
+            Targets: Targets,
+            Stoploss: stoploss,
+            Leverage: leverage,
+          },
+        })
+
         .then((response) => {
           // Handle the API response
           console.log(response.data);
@@ -141,11 +152,13 @@ export default function Addcall({ navigation }) {
   const [cd, setCd] = useState([]);
   useEffect(() => {
     // Fetch coin details from the API
+
     axios.get('https://api.binance.com/api/v3/ticker/24hr')
       .then(response => {
         setCd(response.data);
       })
       .catch(error => {
+
         console.log(error);
       });
   }, []);
@@ -159,6 +172,7 @@ export default function Addcall({ navigation }) {
       <Header Title={"Make A Call"} navigation={navigation} />
 
       <View>
+
   <Text
     style={{
       fontSize: 17,
@@ -191,6 +205,7 @@ export default function Addcall({ navigation }) {
     </Picker>
   </View>
 </View>
+
 
       <View
         style={{

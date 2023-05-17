@@ -18,8 +18,10 @@ const InfluenceProfile = ({ navigation, route }) => {
   const [activeFocus, setActiveFocus] = useState(false);
   const [positiveFocus, setPositiveFocus] = useState(false);
   const [negativeFocus, setNegativeFocus] = useState(false);
+
   const [noActiveCalls, setNoActiveCalls] = useState(0);
   const [noTotalCalls, setNoTotalCalls] = useState(0);
+
   useEffect(() => {
     async function getData() {
       try {
@@ -62,6 +64,7 @@ const InfluenceProfile = ({ navigation, route }) => {
     }
     const GetNumberOfCalls = async () => {
       await axios
+
         .get(`http://localhost:8080/influencerMetaData/${route.params.Name}`)
         .then((res) => {
           setNoTotalCalls(res.data["totalCalls"]);
