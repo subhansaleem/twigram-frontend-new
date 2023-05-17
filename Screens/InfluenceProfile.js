@@ -17,6 +17,8 @@ const InfluenceProfile = ({ navigation, route }) => {
   const [activeFocus, setActiveFocus] = useState(false);
   const [positiveFocus, setPositiveFocus] = useState(false);
   const [negativeFocus, setNegativeFocus] = useState(false);
+  const [noActiveCalls, setNoActiveCalls] = useState(0);
+  const [noTotalCalls, setNoTotalCalls] = useState(0);
   useEffect(() => {
     async function getData() {
       try {
@@ -57,10 +59,23 @@ const InfluenceProfile = ({ navigation, route }) => {
         console.log(e);
       }
     }
-
+    const GetNumberOfCalls = async () => {
+      await axios
+        .get(
+          `https://fyp-node-backend-deploy-vercel.vercel.app/getMetaData/${route.params.Name}`
+        )
+        .then((res) => {
+          setNoTotalCalls(res.data["Total"]);
+          setNoActiveCalls(res.data["Active"]);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    };
     getData();
     getData1();
     getData2();
+    GetNumberOfCalls();
   }, []);
 
   const [render, setisrender] = useState(false);
@@ -112,7 +127,6 @@ const InfluenceProfile = ({ navigation, route }) => {
           <Image
             source={require("../assets/images/left-arrow.png")}
             className="mt-8 mx-5 w-6 h-5"
-            //resizeMode="cover"
           ></Image>
         </TouchableOpacity>
         <Text className="text-white text-2xl ml-4 mt-4 font-bold">
@@ -126,7 +140,7 @@ const InfluenceProfile = ({ navigation, route }) => {
             <Text>Total Calls</Text>
           </View>
           <Text className="text-white font-semibold text-lg">
-            {route.params.TotalCalls}
+            {noTotalCalls}
           </Text>
         </View>
         <Image
@@ -139,7 +153,7 @@ const InfluenceProfile = ({ navigation, route }) => {
             <Text>Active Calls</Text>
           </View>
           <Text className="text-white font-semibold text-lg">
-            {route.params.ActiveCalls}
+            {noActiveCalls}
           </Text>
         </View>
       </View>

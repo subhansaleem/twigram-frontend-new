@@ -13,7 +13,6 @@ import { useEffect, useState } from "react";
 import { useFonts } from "expo-font";
 import axios from "axios";
 import Header from "../Components/Header";
-import CircularProgress from "react-native-circular-progress-indicator";
 import ProgressBar from "../Components/ProgressCircle";
 
 export default function Influencers({ navigation }) {
@@ -23,7 +22,7 @@ export default function Influencers({ navigation }) {
     async function getData() {
       try {
         await axios
-          .get("https://fyp-node-backend-deploy-vercel.vercel.app/influencers")
+          .get("https://fyp-node-backend-deploy-vercel.vercel.app/getMetaData")
           .then((res) => {
             const api_data = res.data;
             setData1(api_data);
