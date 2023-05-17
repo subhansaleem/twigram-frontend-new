@@ -11,6 +11,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 const InfluenceProfile = ({ navigation, route }) => {
+  console.log(route.params.Name);
   const [data1, setData1] = useState([]);
   const [data2, setData2] = useState([]);
   const [data3, setData3] = useState([]);
@@ -24,7 +25,7 @@ const InfluenceProfile = ({ navigation, route }) => {
       try {
         await axios
           .get(
-            "https://fyp-node-backend-deploy-vercel.vercel.app/influencerprofile/A"
+            `https://fyp-node-backend-deploy-vercel.vercel.app/influencerprofile/${route.params.Name}/A`
           )
           .then((res) => {
             setData1(res.data);
@@ -37,7 +38,7 @@ const InfluenceProfile = ({ navigation, route }) => {
       try {
         await axios
           .get(
-            "https://fyp-node-backend-deploy-vercel.vercel.app/influencerprofile/P"
+            `https://fyp-node-backend-deploy-vercel.vercel.app/influencerprofile/${route.params.Name}/P`
           )
           .then((res) => {
             setData2(res.data);
@@ -50,7 +51,7 @@ const InfluenceProfile = ({ navigation, route }) => {
       try {
         await axios
           .get(
-            "https://fyp-node-backend-deploy-vercel.vercel.app/influencerprofile/N"
+            `https://fyp-node-backend-deploy-vercel.vercel.app/influencerprofile/${route.params.Name}/N`
           )
           .then((res) => {
             setData3(res.data);
@@ -61,12 +62,10 @@ const InfluenceProfile = ({ navigation, route }) => {
     }
     const GetNumberOfCalls = async () => {
       await axios
-        .get(
-          `https://fyp-node-backend-deploy-vercel.vercel.app/getMetaData/${route.params.Name}`
-        )
+        .get(`http://localhost:8080/influencerMetaData/${route.params.Name}`)
         .then((res) => {
-          setNoTotalCalls(res.data["Total"]);
-          setNoActiveCalls(res.data["Active"]);
+          setNoTotalCalls(res.data["totalCalls"]);
+          setNoActiveCalls(res.data["activeCalls"]);
         })
         .catch((e) => {
           console.log(e);
@@ -79,7 +78,6 @@ const InfluenceProfile = ({ navigation, route }) => {
   }, []);
 
   const [render, setisrender] = useState(false);
-  // an object is declared which calls a different object from data file as per button clicked
   const [object, setobject] = useState([]);
   const activepressed = () => {
     setisrender(true);
@@ -203,6 +201,7 @@ const InfluenceProfile = ({ navigation, route }) => {
         </TouchableOpacity>
       </View>
       <View style={{ paddingVertical: 5 }}></View>
+      {console.log(object, data1)}
       {render ? (
         <Cards data={object} Name={route.params.Name} />
       ) : (

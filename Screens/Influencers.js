@@ -22,7 +22,7 @@ export default function Influencers({ navigation }) {
       try {
         await axios
           .get(
-            "https://fyp-node-backend-deploy-vercel.vercel.app/getInfluencer?sortby=successRate&limit=5"
+            "https://fyp-node-backend-deploy-vercel.vercel.app/getInfluencer?sortby=successRate"
           )
           .then((res) => {
             const api_data = res.data;
