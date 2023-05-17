@@ -1,8 +1,6 @@
 import { View, Text, StyleSheet, FlatList, Image } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
-// import { data } from "./data.js";
-// import { data1 } from "./data.js";
 
 const Cards = (props) => {
   function formatTimestamp(timestamp) {

@@ -68,7 +68,14 @@ const Home = ({ navigation }) => {
         console.log(error);
       }
     };
-
+    const updateInfluencers = async () => {
+      try {
+        await axios.get("http://localhost:8080/updateInfluencer");
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    updateInfluencers();
     fetchData();
   }, []);
   return (
@@ -198,7 +205,7 @@ const Home = ({ navigation }) => {
                       textAlign: "center",
                     }}
                   >
-                    {influencer.successRate}
+                    {parseFloat(influencer.scoreAverage).toPrecision(2)}
                   </Text>
                 </View>
               </View>
