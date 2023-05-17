@@ -19,7 +19,6 @@ import Leverage from "../Components/Leverage";
 import { ProfileContext } from "../Components/profilecontext";
 
 export default function Addcall({ navigation }) {
-
   const DEVICE_WIDTH = Dimensions.get("window").width;
   const iwidth = DEVICE_WIDTH - 40;
   const [longshort, setlongshort] = useState("");
@@ -44,7 +43,6 @@ export default function Addcall({ navigation }) {
   const [errors, setErrors] = useState("");
 
   const handleSaveData = async () => {
-
     if (longshort === "") {
       newErrors.push("Call Duration is required.");
       setcalldurationfield("Required");
@@ -54,7 +52,7 @@ export default function Addcall({ navigation }) {
       newErrors.push("Call Type is required.");
       setcalltypefield("Required");
     }
-  
+
     if (t1 === "") {
       newErrors.push("Target 1 is required.");
       settarget1field("Required");
@@ -63,12 +61,12 @@ export default function Addcall({ navigation }) {
       newErrors.push("Target 2 cannot be smaller than Target 1");
       settarget2field("Incorrect Value");
     }
-  
+
     if (t3 !== "" && parseFloat(t3) < parseFloat(t2)) {
       newErrors.push("Target 3 cannot be smaller than Target 2");
       settarget3field("Incorrect Value");
     }
-  
+
     if (t3 !== "" && parseFloat(t3) < parseFloat(t1)) {
       newErrors.push("Target 3 cannot be smaller than Target 1");
       settarget3field("Incorrect Value");
@@ -83,7 +81,7 @@ export default function Addcall({ navigation }) {
     }
 
     setErrors(newErrors);
-  
+
     if (newErrors.length === 0) {
       setIsModalVisible(true);
       let Targets = [];
@@ -92,25 +90,12 @@ export default function Addcall({ navigation }) {
       Targets.push(t3);
 
       const Timestamp = new Date().getTime();
-      const data = {
-        Name: name,
-        Timestamp: Timestamp,
-        call: {
-          Coin: selectedCoin,
-          Conversion: selectedconversion,
-          Type: buysell,
-          Duration: longshort,
-          Targets: Targets,
-          Stoploss: stoploss,
-          Leverage: leverage,
-        },
-      };
-
       await axios
-        .post("https://fyp-node-backend-deploy-vercel.vercel.app/addcall", {
+        .post("http://localhost:8080/addcall", {
           Name: name,
           Timestamp: Timestamp,
           call: {
+            Status: "A",
             Coin: selectedCoin,
             Conversion: selectedconversion,
             Type: buysell,
@@ -122,11 +107,9 @@ export default function Addcall({ navigation }) {
         })
 
         .then((response) => {
-          // Handle the API response
           console.log(response.data);
         })
         .catch((error) => {
-          // Handle any errors
           console.error(error);
         });
     }
@@ -151,14 +134,12 @@ export default function Addcall({ navigation }) {
   const [selectedCoin, setSelectedCoin] = useState(null);
   const [cd, setCd] = useState([]);
   useEffect(() => {
-    // Fetch coin details from the API
-
-    axios.get('https://api.binance.com/api/v3/ticker/24hr')
-      .then(response => {
+    axios
+      .get("https://api.binance.com/api/v3/ticker/24hr")
+      .then((response) => {
         setCd(response.data);
       })
-      .catch(error => {
-
+      .catch((error) => {
         console.log(error);
       });
   }, []);
@@ -172,40 +153,42 @@ export default function Addcall({ navigation }) {
       <Header Title={"Make A Call"} navigation={navigation} />
 
       <View>
-
-  <Text
-    style={{
-      fontSize: 17,
-      marginLeft: 28,
-      color: "white",
-      marginTop: 10,
-      marginBottom: 2,
-    }}
-  >
-    Coin Name
-  </Text>
-  <View style={{ width: iwidth, alignSelf: "center" }}>
-    <Picker
-      style={{
-        marginTop: 10,
-        backgroundColor: "grey",
-        borderColor: "white",
-        borderWidth: 0.5,
-        borderRadius: 8,
-        padding: 10,
-        color: "white"
-      }}
-      selectedValue={selectedCoin}
-      onValueChange={(itemValue) => setSelectedCoin(itemValue)}
-      mode="dropdown" // Use dropdown mode to show the picker box
-    >
-      {cd.map((item, index) => (
-        <Picker.Item key={index} label={item.symbol} value={item.symbol} />
-      ))}
-    </Picker>
-  </View>
-</View>
-
+        <Text
+          style={{
+            fontSize: 17,
+            marginLeft: 28,
+            color: "white",
+            marginTop: 10,
+            marginBottom: 2,
+          }}
+        >
+          Coin Name
+        </Text>
+        <View style={{ width: iwidth, alignSelf: "center" }}>
+          <Picker
+            style={{
+              marginTop: 10,
+              backgroundColor: "grey",
+              borderColor: "white",
+              borderWidth: 0.5,
+              borderRadius: 8,
+              padding: 10,
+              color: "white",
+            }}
+            selectedValue={selectedCoin}
+            onValueChange={(itemValue) => setSelectedCoin(itemValue)}
+            mode="dropdown" // Use dropdown mode to show the picker box
+          >
+            {cd.map((item, index) => (
+              <Picker.Item
+                key={index}
+                label={item.symbol}
+                value={item.symbol}
+              />
+            ))}
+          </Picker>
+        </View>
+      </View>
 
       <View
         style={{
@@ -235,9 +218,6 @@ export default function Addcall({ navigation }) {
               alignItems: "center",
               marginLeft: 12,
               marginRight: 19,
-
-              //padding: 5,
-              //padding: 5,
             }}
           >
             Call Duration

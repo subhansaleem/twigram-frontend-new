@@ -23,11 +23,11 @@ const Cards = (props) => {
       >
         <View className="flex-row justify-around">
           <View className="flex-1 justify-center items-start ml-8">
-            <View className="flex-row mt-4">
+            {/* <View className="flex-row mt-4">
               <Text className="text-white font-extrabold text-lg">
                 {item.Name}
               </Text>
-            </View>
+            </View> */}
             <View className="flex-row">
               <Text className="text-xl text-white font-bold">
                 {item.Call.Coin}
@@ -38,13 +38,24 @@ const Cards = (props) => {
             </View>
             <View className="flex-row">
               <View className="bg-[#69C783] rounded-t-sm mt-1">
-                <Text className="text-white font-semibold">
-                  {item.Call.calltime}
-                </Text>
+                {item.Call.calltime != null ||
+                item.Call.calltime != undefined ? (
+                  <Text className="text-white font-semibold">
+                    {item.Call.calltime}
+                  </Text>
+                ) : (
+                  <Text className="text-white font-semibold">LONG</Text>
+                )}
               </View>
-              <Text className="text-white font-semibold px-2 align-super mt-1">
-                | {item.Call.Leverage}
-              </Text>
+              {item.Call.Leverage != null || item.Call.Leverage != undefined ? (
+                <Text className="text-white font-semibold px-2 align-super mt-1">
+                  | {item.Call.Leverage}
+                </Text>
+              ) : (
+                <Text className="text-white font-semibold px-2 align-super mt-1">
+                  | No leverage
+                </Text>
+              )}
             </View>
             <View>
               <Text className="text-white font-semibold mt-1">
@@ -62,9 +73,12 @@ const Cards = (props) => {
                 </>
               </View>
               <View>
-                <Text className="self-center mt-2 font-semibold">
-                  ${item.Call.buyvalue}
-                </Text>
+                {item.Call.buyvalue != undefined ||
+                item.Call.buyvalue != undefined ? (
+                  <Text className="self-center mt-2 font-semibold">
+                    ${item.Call.buyvalue}
+                  </Text>
+                ) : null}
               </View>
             </View>
           </View>
@@ -84,6 +98,7 @@ const Cards = (props) => {
           style={{
             flex: 1,
             flexDirection: "row",
+            justifyContent: "space-between",
           }}
         >
           <View
@@ -91,8 +106,9 @@ const Cards = (props) => {
               backgroundColor: "white",
               flexDirection: "row",
               borderRadius: "rounded-md",
+              //padding: "p-2",
+              alignSelf: "flex-start",
               marginTop: -18,
-              maxWidth: 180,
               padding: 5,
               borderRadius: 5,
             }}
@@ -102,9 +118,9 @@ const Cards = (props) => {
               className="mt-1 w-3 h-3 mr-1"
               //resizeMode="cover"
             />
-            <Text style={{ fontSize: 13 }}>Targets : </Text>
-            <Text style={{ fontSize: 13, textAlign: "left" }}>
-              {item.Call.Targets.map((x) => parseFloat(x).toPrecision(2))}
+            <Text style={{ fontSize: "500", fontSize: 13 }}>Targets </Text>
+            <Text style={{ fontSize: "500", fontSize: 13 }}>
+              {item.Call.Targets.join(" - ")}
             </Text>
           </View>
           <View
@@ -112,6 +128,7 @@ const Cards = (props) => {
               backgroundColor: "white",
               flexDirection: "row",
               borderRadius: "rounded-md",
+              //padding: "p-2",
               alignSelf: "flex-start",
               marginTop: -18,
               padding: 5,
@@ -165,13 +182,17 @@ const Cards = (props) => {
                 {item.Call.CompletedOn}
               </Text>
             </View>
-          ) : null}
+          ) : (
+            ""
+          )}
           {item.Call.Accuracy != null || item.Call.Accuracy != undefined ? (
             <View className="bg-white mt-2 flex-row rounded-md p-2 self-start">
               <Text className="text-black font-semibold mx-1">Accuracy</Text>
               <Text className="text-black ">{item.Call.Accuracy}</Text>
             </View>
-          ) : null}
+          ) : (
+            ""
+          )}
         </View>
       </LinearGradient>
     ) : null;

@@ -1,9 +1,16 @@
-import { View, Text, TouchableOpacity, StyleSheet, TextInput } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  TextInput,
+} from "react-native";
 import React, { useState, useContext, useEffect } from "react";
 import { TailwindProvider } from "tailwindcss-react-native";
 import { useFonts } from "expo-font";
 import InputButton from "../Components/InputButton";
 import ButtonCmp from "../Components/ButtonCmp";
+import axios from "axios";
 import { ProfileContext } from "../Components/profilecontext";
 
 const OTP = ({ navigation }) => {
@@ -32,12 +39,12 @@ const OTP = ({ navigation }) => {
     try {
       const otpString = otp.join("");
       const response = await axios.post(
-        'https://fyp-node-backend-deploy-vercel.vercel.app/checkotp',
+        "https://fyp-node-backend-deploy-vercel.vercel.app/checkotp",
         {},
         {
           headers: {
             "x-access-token": accessToken,
-            "otp": otpString,
+            otp: otpString,
           },
         }
       );
@@ -53,7 +60,6 @@ const OTP = ({ navigation }) => {
 
   return (
     <TailwindProvider>
-      
       <View className="flex-1 items-center bg-black">
         <View className="h-1/4"></View>
         <Text className="font-extrabold text-4xl text-white">OTP</Text>
@@ -62,21 +68,21 @@ const OTP = ({ navigation }) => {
         </Text>
         <View className="h-32"></View>
         <View className="flex-row">
-        <View
-      className="bg-[#6D7487] rounded-xl  h-14 justify-center mx-1"
-      style={{width:56}}
-    >
-      <TextInput
+          <View
+            className="bg-[#6D7487] rounded-xl  h-14 justify-center mx-1"
+            style={{ width: 56 }}
+          >
+            <TextInput
               placeholder={"-"}
               className="text-white text-center font-lg"
               onChangeText={(text) => handleOtpChange(text, 0)}
               value={otp[0].toString()}
             ></TextInput>
-        </View>
-        <View
-      className="bg-[#6D7487] rounded-xl  h-14 justify-center mx-1"
-      style={{width:56}}
-    >
+          </View>
+          <View
+            className="bg-[#6D7487] rounded-xl  h-14 justify-center mx-1"
+            style={{ width: 56 }}
+          >
             <TextInput
               placeholder={"-"}
               className="text-white text-center font-lg"
@@ -85,50 +91,50 @@ const OTP = ({ navigation }) => {
             ></TextInput>
           </View>
           <View
-      className="bg-[#6D7487] rounded-xl  h-14 justify-center mx-1"
-      style={{width:56}}
-    >
+            className="bg-[#6D7487] rounded-xl  h-14 justify-center mx-1"
+            style={{ width: 56 }}
+          >
             <TextInput
               placeholder={"-"}
               className="text-white text-center font-lg"
               onChangeText={(text) => handleOtpChange(text, 2)}
               value={otp[2].toString()}
             ></TextInput>
-            </View>
-            <View
-      className="bg-[#6D7487] rounded-xl  h-14 justify-center mx-1"
-      style={{width:56}}
-    >
+          </View>
+          <View
+            className="bg-[#6D7487] rounded-xl  h-14 justify-center mx-1"
+            style={{ width: 56 }}
+          >
             <TextInput
               placeholder={"-"}
               className="text-white text-center font-lg"
-              onChangeText={(text) => handleOtpChange(text,3)}
+              onChangeText={(text) => handleOtpChange(text, 3)}
               value={otp[3].toString()}
             ></TextInput>
-            </View>
-            <View
-      className="bg-[#6D7487] rounded-xl  h-14 justify-center mx-1"
-      style={{width:56}}
-    >
+          </View>
+          <View
+            className="bg-[#6D7487] rounded-xl  h-14 justify-center mx-1"
+            style={{ width: 56 }}
+          >
             <TextInput
               placeholder={"-"}
               className="text-white text-center font-lg"
               onChangeText={(text) => handleOtpChange(text, 4)}
               value={otp[4].toString()}
             ></TextInput>
-            </View>
-            <View
-      className="bg-[#6D7487] rounded-xl  h-14 justify-center mx-1"
-      style={{width:56}}
-    >
+          </View>
+          <View
+            className="bg-[#6D7487] rounded-xl  h-14 justify-center mx-1"
+            style={{ width: 56 }}
+          >
             <TextInput
               placeholder={"-"}
               className="text-white text-center font-lg"
               onChangeText={(text) => handleOtpChange(text, 5)}
               value={otp[5].toString()}
             ></TextInput>
-            </View>
-            {/* <TextInput
+          </View>
+          {/* <TextInput
               placeholder={"-"}
               className="text-white text-center font-lg"
               onChangeText={(text) => handleOtpChange(text, 6)}
@@ -152,8 +158,6 @@ const OTP = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </View>
-
-
     </TailwindProvider>
   );
 };

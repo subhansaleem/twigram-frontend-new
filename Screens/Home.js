@@ -94,7 +94,7 @@ const Home = ({ navigation }) => {
                 style={{
                   width: 40,
                   color: "#E36139",
-                  fontSize: 12,
+                  fontSize: 16,
                   fontWeight: "bold",
                   marginLeft: 10,
                 }}
@@ -105,7 +105,7 @@ const Home = ({ navigation }) => {
                 style={{
                   width: 128,
                   color: "#E36139",
-                  fontSize: 12,
+                  fontSize: 16,
                   marginLeft: 10,
                   fontWeight: "bold",
                 }}
@@ -160,10 +160,10 @@ const Home = ({ navigation }) => {
                 <View className="w-10 h-10">
                   <Text
                     style={{
-                      color: "white",
-                      opacity: 0.8,
+                      color: index === 0 ? "white" : "white",
+                      opacity: index === 0 ? 1 : 0.8,
                       fontWeight: index === 0 ? 600 : 400,
-                      fontSize: index === 0 ? 24 : 16,
+                      fontSize: index === 0 ? 18 : 14,
                       textAlign: "left",
                     }}
                   >
@@ -173,10 +173,10 @@ const Home = ({ navigation }) => {
                 <View className="w-32 h-10 ">
                   <Text
                     style={{
-                      color: "white",
-                      opacity: 0.8,
+                      color: index === 0 ? "white" : "white",
+                      opacity: index === 0 ? 1 : 0.8,
                       fontWeight: index === 0 ? 600 : 400,
-                      fontSize: index === 0 ? 24 : 16,
+                      fontSize: index === 0 ? 18 : 14,
                     }}
                   >
                     {influencer.name}
@@ -185,10 +185,10 @@ const Home = ({ navigation }) => {
                 <View className="w-10 h-10 ">
                   <Text
                     style={{
-                      color: "white",
-                      opacity: 0.8,
+                      color: index === 0 ? "white" : "white",
+                      opacity: index === 0 ? 1 : 0.8,
                       fontWeight: index === 0 ? 600 : 400,
-                      fontSize: index === 0 ? 24 : 16,
+                      fontSize: index === 0 ? 18 : 14,
                       textAlign: "center",
                     }}
                   >
@@ -198,10 +198,10 @@ const Home = ({ navigation }) => {
                 <View className="w-10 h-10">
                   <Text
                     style={{
-                      color: "white",
-                      opacity: 0.8,
+                      color: index === 0 ? "white" : "white",
+                      opacity: index === 0 ? 1 : 0.8,
                       fontWeight: index === 0 ? 600 : 400,
-                      fontSize: index === 0 ? 24 : 16,
+                      fontSize: index === 0 ? 18 : 14,
                       textAlign: "center",
                     }}
                   >
@@ -225,7 +225,7 @@ const Home = ({ navigation }) => {
           <BlurView className="h-72 rounded-lg w-40" intensity={80}>
             <View className=" flex-row flex-1 mt-5">
               <View className="flex-1">
-                <Text className="text-white font-bold text-xs ml-1">Coin</Text>
+                <Text className="text-white font-bold text-xs ml-3">Coin</Text>
               </View>
               <View className="flex-1 ">
                 <Text className="text-white font-bold text-xs ml-5">Value</Text>
@@ -267,12 +267,12 @@ const Home = ({ navigation }) => {
                 return (
                   <View key={i.symbol} className=" flex-row flex-1 ">
                     <View className="w-14">
-                      <Text className="text-white font-bold text-xs ml-1">
+                      <Text className="text-white font-bold text-xs ml-3">
                         {String(i.symbol).slice(0, -4)}
                       </Text>
                     </View>
                     <View className="w-12">
-                      <Text className="text-white font-bold text-xs">
+                      <Text className="text-white font-bold text-xs ml-1">
                         {parseFloat(i.weightedAvgPrice).toPrecision(2)}
                       </Text>
                     </View>
@@ -299,7 +299,7 @@ const Home = ({ navigation }) => {
           <BlurView className="h-72 rounded-lg w-40" intensity={80}>
             <View className="flex-row flex-1 ml-1 mt-5">
               <View className="flex-1">
-                <Text className="text-white font-bold text-xs">Coin</Text>
+                <Text className="text-white font-bold text-xs ml-2">Coin</Text>
               </View>
               <View className="flex-1 ">
                 <Text className="text-white font-bold text-xs ml-5">Value</Text>
@@ -338,7 +338,7 @@ const Home = ({ navigation }) => {
                 return (
                   <View key={i.symbol} className=" flex-row flex-1 ">
                     <View className="w-14 ml-1">
-                      <Text className="text-white font-bold text-xs">
+                      <Text className="text-white font-bold text-xs ml-2">
                         {String(i.symbol).slice(0, -4)}
                       </Text>
                     </View>
