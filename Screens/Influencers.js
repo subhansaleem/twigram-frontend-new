@@ -7,7 +7,6 @@ import {
   ImageBackground,
 } from "react-native";
 
-import { Dimensions } from "react-native";
 import React from "react";
 import { useEffect, useState } from "react";
 import { useFonts } from "expo-font";

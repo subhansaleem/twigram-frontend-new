@@ -26,7 +26,7 @@ const Home = ({ navigation }) => {
     const scrollViewHeight = layoutMeasurement.height;
     const maxScroll = contentHeight - scrollViewHeight;
     const percentage = (scrollPosition / maxScroll) * 100;
-    setScrollPercentage(percentage.toFixed(2));
+    setScrollPercentage(percentage.toFixed(2)); // round to 2 decimal places
     if (scrollPercentage < 25) {
       setShowNav(false);
     } else if (scrollPercentage > 25) {
@@ -57,26 +57,17 @@ const Home = ({ navigation }) => {
   const [influencers, setInfluencers] = useState([]);
 
   useEffect(() => {
-    const updateInfluencers = async () => {
-      try {
-        await axios.get(
-          "https://fyp-node-backend-deploy-vercel.vercel.app/updateInfluencer"
-        );
-      } catch (error) {
-        console.log(error);
-      }
-    };
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://fyp-node-backend-deploy-vercel.vercel.app/getTopInfluencer?sortby=successRate&limit=5"
+          "https://fyp-node-backend-deploy-vercel.vercel.app/influencer?sortby=successRate"
         );
         setInfluencers(response.data);
       } catch (error) {
         console.log(error);
       }
     };
-    updateInfluencers();
+
     fetchData();
   }, []);
   return (
