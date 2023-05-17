@@ -21,7 +21,9 @@ export default function Influencers({ navigation }) {
     async function getData() {
       try {
         await axios
-          .get("http://localhost:8080/getInfluencer?sortby=successRate")
+          .get(
+            "https://fyp-node-backend-deploy-vercel.vercel.app/getInfluencer?sortby=successRate&limit=5"
+          )
           .then((res) => {
             const api_data = res.data;
             setData1(api_data);
